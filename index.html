@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>牛込内科・糖尿病クリニック Lステップ シナリオ初稿</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: #f5f7fa;
+    color: #1a1a2e;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page-header {
+    background: linear-gradient(135deg, #0f4c81 0%, #16213e 100%);
+    color: #fff;
+    padding: 40px 20px 32px;
+    text-align: center;
+  }
+  .page-header h1 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+  .page-header p { font-size: 13px; color: #a0aec0; }
+  .page-header .meta {
+    margin-top: 10px; font-size: 12px; color: #cbd5e1;
+    display: flex; justify-content: center; gap: 18px; flex-wrap: wrap;
+  }
+
+  .nav-toc {
+    display: flex; justify-content: center; gap: 6px; flex-wrap: wrap;
+    padding: 12px 20px; background: #fff; border-bottom: 1px solid #e2e8f0;
+    position: sticky; top: 0; z-index: 99;
+  }
+  .nav-btn {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; font-weight: 600;
+    padding: 5px 12px; border-radius: 16px;
+    text-decoration: none; color: #475569;
+    background: #f1f5f9; border: 1px solid #e2e8f0;
+    transition: all .15s;
+  }
+  .nav-btn:hover { background: #e2e8f0; }
+  .nav-btn .nav-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  .container { max-width: 920px; margin: 0 auto; padding: 28px 20px 80px; }
+
+  .scenario-header {
+    margin: 32px 0 16px;
+    padding: 18px 22px;
+    background: #fff;
+    border-radius: 12px;
+    border-left: 6px solid #0f4c81;
+    box-shadow: 0 1px 3px rgba(0,0,0,.05);
+  }
+  .scenario-header.chronic { border-left-color: #b45309; }
+  .scenario-header h2 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .scenario-header p { font-size: 12px; color: #64748b; line-height: 1.7; }
+  .scenario-tag {
+    display: inline-block; font-size: 10px; font-weight: 700;
+    padding: 2px 8px; border-radius: 4px; margin-bottom: 8px;
+    background: #dbeafe; color: #1e40af;
+  }
+  .scenario-tag.chronic { background: #fef3c7; color: #92400e; }
+
+  .step { margin-bottom: 0; scroll-margin-top: 80px; }
+
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.04);
+    overflow: hidden;
+    transition: box-shadow .2s;
+  }
+  .card:hover { box-shadow: 0 2px 6px rgba(0,0,0,.08), 0 8px 24px rgba(0,0,0,.06); }
+  .card-border-blue   { border-left: 4px solid #3b82f6; }
+  .card-border-orange { border-left: 4px solid #f59e0b; }
+
+  .card-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 16px 20px 12px; border-bottom: 1px solid #f1f5f9;
+  }
+  .card-day {
+    font-size: 12px; font-weight: 700; color: #fff;
+    background: #1a1a2e; padding: 3px 10px; border-radius: 6px; white-space: nowrap;
+  }
+  .card-title { font-size: 16px; font-weight: 600; flex: 1; }
+
+  .card-body { padding: 16px 20px 20px; }
+  .card-trigger { font-size: 11px; color: #94a3b8; margin-bottom: 12px; }
+
+  /* LINE message preview */
+  .msg-preview {
+    background: #e8edf3;
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin: 10px 0;
+  }
+  .msg-bubble {
+    background: #fff;
+    border-radius: 0 12px 12px 12px;
+    padding: 12px 14px;
+    max-width: 92%;
+    font-size: 13px;
+    line-height: 1.75;
+    white-space: pre-line;
+    margin-bottom: 8px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.04);
+  }
+  .msg-bubble:last-child { margin-bottom: 0; }
+  .msg-btns {
+    display: flex; flex-direction: column; gap: 5px; margin-top: 4px;
+  }
+  .msg-btn {
+    display: block; text-align: center;
+    padding: 9px; border-radius: 6px;
+    font-size: 13px; font-weight: 600; color: #fff;
+    background: #22c55e;
+  }
+  .msg-btn.blue { background: #3b82f6; }
+  .msg-btn.gray { background: #94a3b8; }
+  .msg-btn.warn { background: #f59e0b; }
+  .msg-btn.sec  { background: #fff; color: #22c55e; border: 2px solid #22c55e; }
+
+  .branch-section { margin-top: 14px; }
+  .branch-label {
+    font-size: 11px; font-weight: 600; color: #64748b;
+    text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px;
+  }
+
+  .branch-block {
+    margin-top: 14px;
+    padding: 14px 16px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+  }
+  .branch-block.green  { background: #f0fdf4; border-color: #bbf7d0; }
+  .branch-block.blue   { background: #eff6ff; border-color: #bfdbfe; }
+  .branch-block.orange { background: #fff7ed; border-color: #fed7aa; }
+
+  .branch-title {
+    font-size: 12px; font-weight: 700;
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .branch-title .tag {
+    font-size: 10px; font-weight: 700;
+    padding: 1px 7px; border-radius: 4px; color: #fff;
+  }
+  .branch-title .tag.a { background: #22c55e; }
+  .branch-title .tag.b { background: #3b82f6; }
+  .branch-title .tag.c { background: #f59e0b; }
+
+  .auto-reply {
+    background: #fff;
+    border-radius: 8px;
+    padding: 11px 14px;
+    font-size: 12px;
+    line-height: 1.75;
+    color: #334155;
+    white-space: pre-line;
+    border: 1px solid #e2e8f0;
+  }
+
+  .design-note {
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: #fafafa;
+    border-left: 3px solid #cbd5e1;
+    border-radius: 0 8px 8px 0;
+    font-size: 11px;
+    line-height: 1.7;
+    color: #64748b;
+  }
+  .design-note-label {
+    font-size: 10px; font-weight: 600; color: #94a3b8; margin-bottom: 4px;
+  }
+
+  .flow-arrow {
+    display: flex; flex-direction: column; align-items: center; padding: 10px 0;
+  }
+  .flow-arrow::before { content: ''; width: 2px; height: 24px; background: #94a3b8; }
+  .flow-arrow::after {
+    content: ''; width: 0; height: 0;
+    border-left: 6px solid transparent; border-right: 6px solid transparent;
+    border-top: 8px solid #94a3b8;
+  }
+
+  .summary-box {
+    margin: 28px 0 8px;
+    padding: 18px 22px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 13px;
+    line-height: 1.85;
+    color: #334155;
+  }
+  .summary-box h3 { font-size: 14px; margin-bottom: 8px; color: #1a1a2e; }
+  .summary-box ul { padding-left: 18px; }
+  .summary-box li { margin-bottom: 4px; }
+
+  @media (max-width: 700px) {
+    .nav-toc { font-size: 10px; }
+    .card-title { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>牛込内科・糖尿病クリニック Lステップ シナリオ初稿</h1>
+  <p>受診後フォローアップ｜急性疾患＆慢性疾患シナリオ</p>
+  <div class="meta">
+    <span>所在地：東京都新宿区市谷薬王寺町14-17</span>
+    <span>作成：2026-05-15</span>
+  </div>
+</div>
+
+<div class="nav-toc">
+  <a href="#scenario-acute" class="nav-btn"><div class="nav-dot" style="background:#3b82f6"></div>急性疾患フロー</a>
+  <a href="#scenario-chronic" class="nav-btn"><div class="nav-dot" style="background:#f59e0b"></div>慢性疾患フロー</a>
+  <a href="#summary" class="nav-btn"><div class="nav-dot" style="background:#94a3b8"></div>運用前提</a>
+</div>
+
+<div class="container">
+
+  <!-- ════════════════════════════════════════ -->
+  <!-- シナリオ① 急性疾患 -->
+  <!-- ════════════════════════════════════════ -->
+  <div class="scenario-header" id="scenario-acute">
+    <span class="scenario-tag">シナリオ①</span>
+    <h2>急性疾患での受診フォロー</h2>
+    <p>診察後、スタッフが該当患者に対し<b>「急性疾患フォロー開始」アクション</b>を実行 → 7日後に体調確認を1通配信。患者の回答に応じて自動返信で分岐。</p>
+  </div>
+
+  <div class="step" id="step-acute-day7">
+    <div class="card card-border-blue">
+      <div class="card-header">
+        <span class="card-day">受診+7日</span>
+        <span class="card-title">体調確認＋3択ボタン</span>
+      </div>
+      <div class="card-body">
+        <div class="card-trigger">トリガー：「急性疾患フォロー開始」アクション実行から7日後｜配信形式：テキスト＋ボタン3つ</div>
+
+        <div class="msg-preview">
+          <div class="msg-bubble">こんにちは、牛込内科・糖尿病クリニックです。
+先日はご来院いただきありがとうございました。
+
+その後の体調はいかがでしょうか。
+当てはまるものをタップしてお知らせください。</div>
+          <div class="msg-bubble">
+            <div class="msg-btns">
+              <div class="msg-btn">体調が改善した</div>
+              <div class="msg-btn blue">改善せず、他院を受診した</div>
+              <div class="msg-btn warn">改善していない（他院も未受診）</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="branch-section">
+          <div class="branch-label">分岐（回答ごとに自動返信）</div>
+
+          <div class="branch-block green">
+            <div class="branch-title"><span class="tag a">A</span> 体調が改善した</div>
+            <div class="auto-reply">体調が改善されたとのこと、何よりです。
+
+またお困りのことがございましたら、いつでもご相談ください。
+今後ともどうぞよろしくお願いいたします。
+
+牛込内科・糖尿病クリニック</div>
+            <div class="design-note">
+              <div class="design-note-label">設計意図</div>
+              ポジティブな結果には深追いせず、短く完結。次回受診の動機を残すために「またご相談ください」で締める。
+            </div>
+          </div>
+
+          <div class="branch-block blue">
+            <div class="branch-title"><span class="tag b">B</span> 改善せず、他院を受診した</div>
+            <div class="auto-reply">ご状況をお知らせいただきありがとうございます。
+他院をご受診されたとのこと、承知いたしました。
+
+その後も症状が改善されない場合は、当院から提携病院へのご紹介も可能ですので、お気軽にこちらのLINEからご相談ください。
+
+牛込内科・糖尿病クリニック</div>
+            <div class="design-note">
+              <div class="design-note-label">設計意図</div>
+              他院へ流出済みのケース。批判せず、当院の専門ネットワーク（提携病院）を強みとして提示し、戻ってきやすい導線を残す。
+            </div>
+          </div>
+
+          <div class="branch-block orange">
+            <div class="branch-title"><span class="tag c">C</span> 改善していない（他院も未受診）</div>
+            <div class="auto-reply">体調が優れないとのこと、心配しております。
+
+症状が長引いている場合は、まず当院での再診をおすすめいたします。
+診察の上、必要に応じて提携病院へのご紹介も可能です。
+
+下記より再診のご予約またはご相談を承ります。</div>
+            <div class="msg-preview" style="margin-top:8px;">
+              <div class="msg-bubble">
+                <div class="msg-btns">
+                  <div class="msg-btn">再診を予約する</div>
+                  <div class="msg-btn sec">LINEで相談する</div>
+                </div>
+              </div>
+            </div>
+            <div class="design-note">
+              <div class="design-note-label">設計意図</div>
+              最も介入価値の高い層。再診への直接導線＋相談導線の二段構えで離脱を防ぐ。提携病院紹介に触れることで「ここで解決できる」感を出す。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════ -->
+  <!-- シナリオ② 慢性疾患 -->
+  <!-- ════════════════════════════════════════ -->
+  <div class="scenario-header chronic" id="scenario-chronic" style="margin-top:48px;">
+    <span class="scenario-tag chronic">シナリオ②</span>
+    <h2>慢性疾患での受診フォロー</h2>
+    <p>診察後、スタッフが該当患者に対し<b>「慢性疾患フォロー開始」アクション</b>を実行 → 1ヶ月／2ヶ月／3ヶ月後の3回配信。再診時に再度アクションを実行すれば、前回分の配信は停止し、新しい起算日でリセット。</p>
+  </div>
+
+  <div class="step" id="step-chronic-1m">
+    <div class="card card-border-orange">
+      <div class="card-header">
+        <span class="card-day">受診+1ヶ月</span>
+        <span class="card-title">体調確認＋再診の促し（薬切れ前）</span>
+      </div>
+      <div class="card-body">
+        <div class="card-trigger">トリガー：「慢性疾患フォロー開始」アクション実行から30日後｜配信形式：テキスト＋ボタン2つ</div>
+
+        <div class="msg-preview">
+          <div class="msg-bubble">こんにちは、牛込内科・糖尿病クリニックです。
+前回のご受診から1ヶ月が経ちました。
+
+その後の体調はいかがでしょうか。
+そろそろお薬も残り少なくなる頃かと思います。
+切らさないよう、お早めの再診をおすすめいたします。</div>
+          <div class="msg-bubble">
+            <div class="msg-btns">
+              <div class="msg-btn">再診を予約する</div>
+              <div class="msg-btn sec">体調を相談する</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="design-note">
+          <div class="design-note-label">設計意図</div>
+          初回リマインドは「薬切れ」という具体的・実用的な理由を提示。プレッシャーを与えず、自然な動機づけにとどめる。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flow-arrow"></div>
+
+  <div class="step" id="step-chronic-2m">
+    <div class="card card-border-orange">
+      <div class="card-header">
+        <span class="card-day">受診+2ヶ月</span>
+        <span class="card-title">体調確認＋受診なしを案じる①</span>
+      </div>
+      <div class="card-body">
+        <div class="card-trigger">トリガー：「慢性疾患フォロー開始」アクション実行から60日後｜再診時にアクション再実行されていれば配信停止｜配信形式：テキスト＋ボタン2つ</div>
+
+        <div class="msg-preview">
+          <div class="msg-bubble">こんにちは、牛込内科・糖尿病クリニックです。
+前回のご受診から2ヶ月が経ちました。
+
+その後の体調はいかがでしょうか。
+ご受診の確認ができておらず、お薬や治療の状況が気がかりです。
+
+慢性疾患の管理には、継続的な服薬と定期的な経過観察が大切です。
+ぜひお早めに再診をご検討ください。</div>
+          <div class="msg-bubble">
+            <div class="msg-btns">
+              <div class="msg-btn">再診を予約する</div>
+              <div class="msg-btn sec">体調を相談する</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="design-note">
+          <div class="design-note-label">設計意図</div>
+          2ヶ月目は「気がかり」「大切」というやわらかい医療的根拠で再診の重要性を伝える。脅さず、しかし放置のリスクは明示。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flow-arrow"></div>
+
+  <div class="step" id="step-chronic-3m">
+    <div class="card card-border-orange">
+      <div class="card-header">
+        <span class="card-day">受診+3ヶ月</span>
+        <span class="card-title">体調確認＋受診なしを案じる②</span>
+      </div>
+      <div class="card-body">
+        <div class="card-trigger">トリガー：「慢性疾患フォロー開始」アクション実行から90日後｜再診時にアクション再実行されていれば配信停止｜配信形式：テキスト＋ボタン2つ</div>
+
+        <div class="msg-preview">
+          <div class="msg-bubble">こんにちは、牛込内科・糖尿病クリニックです。
+前回のご受診から3ヶ月が経ちました。
+
+しばらくご受診が確認できておらず、体調を案じております。
+治療を中断されますと、症状の悪化や合併症のリスクが高まる場合がございます。
+
+ご事情やご不安がございましたら、こちらのLINEでお気軽にお知らせください。
+再診のご予約も、こちらから承れます。</div>
+          <div class="msg-bubble">
+            <div class="msg-btns">
+              <div class="msg-btn">再診を予約する</div>
+              <div class="msg-btn sec">LINEで相談する</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="design-note">
+          <div class="design-note-label">設計意図</div>
+          3ヶ月目は最後のフォロー。「合併症リスク」という医療的事実をもって踏み込む。同時に、通えない事情への共感を残し、相談からの再接点を狙う。
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════ -->
+  <!-- 運用前提 -->
+  <!-- ════════════════════════════════════════ -->
+  <div class="summary-box" id="summary">
+    <h3>運用前提・確認事項</h3>
+    <ul>
+      <li><b>アクション起点運用</b>：診察後にスタッフが該当患者に対し「急性疾患フォロー開始」「慢性疾患フォロー開始」のいずれかのアクションを実行。アクション内で必要なタグ付与・リマインド配信スタートを一括処理する設計。</li>
+      <li><b>アクション実行方法</b>：スタッフ管理画面から該当患者を検索 → 該当アクションを手動実行。実行手順マニュアルを別途ご用意します。</li>
+      <li><b>慢性疾患の再診時運用</b>：再診のたびに同じアクションを再実行することで、前回分のリマインドが自動停止し、新しい起算日で1ヶ月／2ヶ月／3ヶ月のカウントが始まる設計。</li>
+      <li><b>提携病院</b>：紹介可能な提携先のリスト・想定疾患のすり合わせをお願いします。</li>
+      <li><b>診療科の出し分け</b>：糖尿病など特定疾患は専用シナリオを別途用意するか、共通シナリオで運用するかご相談させてください。</li>
+      <li><b>営業時間外の自動応答</b>：「LINEで相談する」「再診を予約する」を押された際の受付窓口・営業時間外メッセージのご確認をお願いします。</li>
+    </ul>
+  </div>
+
+</div>
+
+</body>
+</html>
