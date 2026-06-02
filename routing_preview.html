@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>牛込内科・糖尿病クリニック LINE 追加経路別プレビュー</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #e8e8e8;
+    font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px 40px;
+    min-height: 100vh;
+  }
+
+  h1.page-title {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 6px;
+    text-align: center;
+  }
+  .page-sub {
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  /* --- Controls --- */
+  .controls {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .seg-btn {
+    padding: 10px 22px;
+    border: 2px solid #06c755;
+    border-radius: 24px;
+    background: #fff;
+    color: #06c755;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .seg-btn.active {
+    background: #06c755;
+    color: #fff;
+  }
+  .reset-btn {
+    padding: 10px 22px;
+    border: 2px solid #999;
+    border-radius: 24px;
+    background: #fff;
+    color: #666;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .reset-btn:hover { background: #f0f0f0; }
+
+  .seg-label {
+    text-align: center;
+    margin-bottom: 14px;
+    font-size: 13px;
+    color: #666;
+    font-weight: 600;
+  }
+  .seg-label strong { color: #06c755; }
+
+  /* --- Phone Frame --- */
+  .phone {
+    width: 375px;
+    max-width: 100%;
+    background: #fff;
+    border-radius: 40px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.15), 0 0 0 1px rgba(0,0,0,.05);
+    overflow: hidden;
+    position: relative;
+  }
+  .status-bar {
+    height: 50px;
+    background: #06c755;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 8px;
+  }
+  .status-bar span { color: #fff; font-size: 11px; font-weight: 600; }
+
+  .line-header {
+    background: #06c755;
+    padding: 10px 16px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .line-header .back { color: #fff; font-size: 22px; line-height: 1; }
+  .line-header .avatar-header {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+    color: #06c755;
+    flex-shrink: 0;
+  }
+  .line-header .name { color: #fff; font-size: 15px; font-weight: 600; }
+
+  /* Chat area */
+  .chat {
+    background: #7494c0;
+    min-height: 560px;
+    max-height: 560px;
+    overflow-y: auto;
+    padding: 16px 12px;
+    scroll-behavior: smooth;
+  }
+
+  .date-label { text-align: center; margin: 10px 0 14px; }
+  .date-label span {
+    background: rgba(0,0,0,.25);
+    color: #fff;
+    font-size: 11px;
+    padding: 3px 12px;
+    border-radius: 12px;
+  }
+
+  .msg-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    margin-bottom: 8px;
+    animation: fadeIn .35s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .msg-row.bot { justify-content: flex-start; }
+  .msg-row.user { justify-content: flex-end; }
+
+  .avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700;
+    color: #06c755;
+    flex-shrink: 0;
+    align-self: flex-start;
+  }
+
+  .bubble {
+    max-width: 260px;
+    padding: 10px 14px;
+    border-radius: 18px;
+    font-size: 14px;
+    line-height: 1.65;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .bot .bubble { background: #fff; color: #111; border-bottom-left-radius: 4px; }
+  .user .bubble { background: #06c755; color: #fff; border-bottom-right-radius: 4px; }
+
+  .time {
+    font-size: 10px;
+    color: rgba(255,255,255,.7);
+    flex-shrink: 0;
+    align-self: flex-end;
+    margin-bottom: 2px;
+  }
+  .msg-row.user .time { order: -1; }
+
+  /* Quick reply buttons */
+  .quick-replies {
+    display: flex; flex-direction: column;
+    gap: 8px;
+    margin: 8px 0 8px 44px;
+    animation: fadeIn .35s ease;
+  }
+  .qr-btn {
+    background: #fff;
+    border: 1.5px solid #06c755;
+    border-radius: 20px;
+    padding: 10px 18px;
+    font-size: 14px;
+    color: #06c755;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .15s;
+    max-width: 260px;
+    text-align: center;
+  }
+  .qr-btn:hover { background: #06c755; color: #fff; }
+  .qr-btn:active { transform: scale(.96); }
+  .qr-btn.disabled { pointer-events: none; opacity: .4; }
+
+  /* CTA */
+  .cta-wrap { margin: 8px 0 8px 44px; animation: fadeIn .35s ease; }
+  .cta-btn {
+    display: block;
+    background: #06c755;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    max-width: 260px;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .cta-btn:hover { background: #05b34c; }
+  .cta-btn.secondary {
+    background: #fff;
+    color: #06c755;
+    border: 1.5px solid #06c755;
+  }
+  .cta-btn.secondary:hover { background: #f3fff7; }
+
+  /* Typing */
+  .typing { display: flex; align-items: flex-end; gap: 8px; margin-bottom: 8px; }
+  .typing-dots {
+    background: #fff;
+    border-radius: 18px;
+    border-bottom-left-radius: 4px;
+    padding: 12px 18px;
+    display: flex; gap: 4px;
+  }
+  .typing-dots span {
+    width: 8px; height: 8px;
+    background: #aaa;
+    border-radius: 50%;
+    animation: bounce .6s infinite alternate;
+  }
+  .typing-dots span:nth-child(2) { animation-delay: .15s; }
+  .typing-dots span:nth-child(3) { animation-delay: .3s; }
+  @keyframes bounce { to { transform: translateY(-4px); opacity: .5; } }
+
+  .bottom-bar {
+    background: #f7f7f7;
+    border-top: 1px solid #ddd;
+    padding: 10px 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .bottom-bar .input-fake {
+    flex: 1;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 13px;
+    color: #999;
+  }
+
+  /* Info panel */
+  .info {
+    margin-top: 20px;
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px 24px;
+    max-width: 720px;
+    width: 100%;
+    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+  }
+  .info h3 { font-size: 14px; color: #333; margin-bottom: 8px; }
+  .info p, .info li { font-size: 13px; color: #666; line-height: 1.7; }
+  .info ul { padding-left: 18px; margin-top: 4px; }
+  .info .tag {
+    display: inline-block;
+    background: #f3fff7;
+    color: #06c755;
+    border: 1px solid #06c755;
+    border-radius: 10px;
+    padding: 2px 8px;
+    font-size: 11px;
+    margin-right: 6px;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+
+<h1 class="page-title">牛込内科・糖尿病クリニック｜LINE 追加経路別プレビュー</h1>
+<p class="page-sub">物理QR／URLが同一の経路は1パターンに統合。初回ボタンでセルフ申告→分岐配信</p>
+
+<div class="controls">
+  <button class="seg-btn active" data-seg="A" onclick="switchSegment('A')">A：クリニックサインQR</button>
+  <button class="seg-btn" data-seg="B" onclick="switchSegment('B')">B：名刺QR（法人）</button>
+  <button class="seg-btn" data-seg="C" onclick="switchSegment('C')">C：Web友だち追加リンク</button>
+  <button class="reset-btn" onclick="resetChat()">リセット</button>
+</div>
+
+<div class="seg-label">現在表示: <strong id="seg-display">A：クリニックサインのQRコード</strong></div>
+
+<div class="phone">
+  <div class="status-bar"><span>10:00</span></div>
+  <div class="line-header">
+    <span class="back">&lsaquo;</span>
+    <div class="avatar-header">牛</div>
+    <span class="name">牛込内科・糖尿病クリニック</span>
+  </div>
+  <div class="chat" id="chat"></div>
+  <div class="bottom-bar">
+    <div class="input-fake">Aa</div>
+  </div>
+</div>
+
+<div class="info">
+  <h3>操作方法</h3>
+  <ul>
+    <li>上部ボタンで3パターン（サインQR／名刺QR／Webリンク）を切替</li>
+    <li>A：初回3択 → 「いま来院しています」のみ受診後フォローへ接続。残り2つは初回返信のみ</li>
+    <li>B：法人窓口。直接メッセージ送信を促す案内のみ</li>
+    <li>C：初回4択 → 経路に合った即時返信1通（ステップ配信なし）</li>
+    <li>「リセット」で最初から再生</li>
+  </ul>
+
+  <h3 style="margin-top:14px">経路別タグ設計</h3>
+  <ul>
+    <li><span class="tag">経路-サイン-来院中</span> <span class="tag">経路-サイン-認知</span> <span class="tag">経路-サイン-検討</span></li>
+    <li><span class="tag">経路-名刺-法人</span></li>
+    <li><span class="tag">経路-Web-LP</span> <span class="tag">経路-Web-SNS</span> <span class="tag">経路-Web-EC</span></li>
+  </ul>
+
+  <h3 style="margin-top:14px">表示について</h3>
+  <ul>
+    <li>冒頭の「〇〇様」は本番配信時に友だちの表示名に置換されます</li>
+    <li>受診後フォロー（急性／慢性）は既存シナリオ（index.html）を利用</li>
+  </ul>
+</div>
+
+<script>
+const RESERVE_URL = '#予約LP';
+const ONLINE_URL = '#オンライン診療';
+const FAQ_URL = '#初診の流れ';
+const B2B_URL = '#法人窓口資料';
+
+// ========== 経路A：クリニックサインのQR ==========
+const A_INITIAL = `〇〇様、こんにちは
+牛込内科・糖尿病クリニックです。
+ご登録ありがとうございます。
+
+差し支えなければ、いまのご状況を教えてください。`;
+
+const A_OPTIONS = [
+  { key: 'visiting', label: '来院中' },
+  { key: 'awareness', label: '看板を見て登録' },
+  { key: 'considering', label: '受診を検討' }
+];
+
+const A_REPLIES = {
+  visiting: {
+    user: '来院中',
+    timeline: [
+      {
+        date: '本日（受診当日）',
+        msg: `本日はご来院ありがとうございました。
+LINEではご受診後のご相談や、
+再診のご予約を承ります。
+
+ご無理のない範囲で、お気軽にメッセージください。`,
+        ctas: [
+          { label: '再診のご予約', url: RESERVE_URL },
+          { label: 'LINEで相談する', url: '#相談', secondary: true }
+        ]
+      },
+      {
+        date: '+当日夜（20:00）',
+        msg: `本日のご来院はいかがでしたでしょうか。
+もしよろしければ、Googleの口コミに
+ご感想をお聞かせいただけますと幸いです。
+
+ご無理のない範囲で構いません。
+お体を大切にお過ごしください。`,
+        ctas: [
+          { label: 'クチコミを書く', url: '#GoogleReview', secondary: true }
+        ]
+      }
+    ]
+  },
+  awareness: {
+    user: '看板を見て登録',
+    timeline: [
+      {
+        date: '即時',
+        msg: `ご登録ありがとうございます。
+牛込内科・糖尿病クリニックです。
+
+当院は内科全般・生活習慣病・糖尿病などのご相談を承っております。
+
+■ 診療時間
+ 平日 9:00〜13:00 / 15:00〜18:00
+ 土曜 9:00〜13:00
+
+■ アクセス
+ 新宿区市谷薬王寺町14-17
+
+ご不明点があればお気軽にメッセージください。`,
+        ctas: [
+          { label: '初診のご予約はこちら', url: RESERVE_URL }
+        ]
+      }
+    ]
+  },
+  considering: {
+    user: '受診を検討',
+    timeline: [
+      {
+        date: '即時',
+        msg: `ご登録ありがとうございます。
+牛込内科・糖尿病クリニックです。
+
+ご受診をご検討中とのこと、
+ご不安な点があればお気軽にお声かけください。
+
+ご都合のよいタイミングで
+ご予約を承っております。`,
+        ctas: [
+          { label: '初診のご予約はこちら', url: RESERVE_URL }
+        ]
+      }
+    ]
+  }
+};
+
+// ========== 経路B：名刺QR（法人B2B） ==========
+const B_INITIAL = `ご挨拶の機会をいただき
+ありがとうございました。
+
+牛込内科・糖尿病クリニック
+法人窓口LINEです。
+
+ご用件は下のメッセージ欄から
+そのままご送信ください。
+担当者よりご返信いたします。`;
+
+const B_DIRECT_CTAS = [];
+
+// ========== 経路C：Web友だち追加リンク ==========
+const C_INITIAL = `〇〇様、こんにちは
+牛込内科・糖尿病クリニックです。
+ご登録ありがとうございます。
+
+今回はどちらをご覧になって
+ご登録いただきましたか？`;
+
+const C_OPTIONS = [
+  { key: 'lp', label: '公式サイト' },
+  { key: 'sns', label: 'Instagram／記事' },
+  { key: 'ec', label: 'オンラインショップ' }
+];
+
+const C_REPLIES = {
+  lp: {
+    user: '公式サイト',
+    timeline: [
+      {
+        date: '即時',
+        msg: `ご検討いただきありがとうございます。
+
+当院ではご来院でのご受診のほか、
+オンライン診療にも対応しております。
+
+ご都合に合わせてお選びください。`,
+        ctas: [
+          { label: '初診のご予約はこちら', url: RESERVE_URL },
+          { label: 'オンライン診療のご予約', url: ONLINE_URL, secondary: true }
+        ]
+      }
+    ]
+  },
+  sns: {
+    user: 'Instagram／記事',
+    timeline: [
+      {
+        date: '即時',
+        msg: `ご登録ありがとうございます。
+
+ご不明点やご相談は、
+LINEから直接承っております。
+
+ご受診をご希望の場合は
+下のボタンからご予約ください。`,
+        ctas: [
+          { label: '初診のご予約はこちら', url: RESERVE_URL }
+        ]
+      }
+    ]
+  },
+  ec: {
+    user: 'オンラインショップ',
+    timeline: [
+      {
+        date: '即時',
+        msg: `ご購入ありがとうございます。
+
+商品のご使用方法やご相談は
+こちらからお気軽にお問い合わせください。
+
+処方継続をご希望の場合は
+オンライン診療でも対応しております。`,
+        ctas: [
+          { label: 'オンライン診療のご予約', url: ONLINE_URL }
+        ]
+      }
+    ]
+  }
+};
+
+// ========== DATA定義 ==========
+const DATA = {
+  A: {
+    label: 'A：クリニックサインのQRコード',
+    flow: 'quickreply',
+    msg1: A_INITIAL,
+    options: A_OPTIONS,
+    replies: A_REPLIES
+  },
+  B: {
+    label: 'B：名刺のQRコード（法人B2B）',
+    flow: 'directCta',
+    msg1: B_INITIAL,
+    ctas: B_DIRECT_CTAS
+  },
+  C: {
+    label: 'C：Webの友だち追加リンク',
+    flow: 'quickreply',
+    msg1: C_INITIAL,
+    options: C_OPTIONS,
+    replies: C_REPLIES
+  }
+};
+
+let currentSeg = 'A';
+let answered = false;
+
+function switchSegment(seg) {
+  currentSeg = seg;
+  document.querySelectorAll('.seg-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.seg === seg);
+  });
+  document.getElementById('seg-display').textContent = DATA[seg].label;
+  resetChat();
+}
+
+function resetChat() {
+  answered = false;
+  const chat = document.getElementById('chat');
+  chat.innerHTML = '';
+  showInitial();
+}
+
+function showInitial() {
+  const chat = document.getElementById('chat');
+  const seg = DATA[currentSeg];
+  const segKey = currentSeg;
+
+  const dl = document.createElement('div');
+  dl.className = 'date-label';
+  dl.innerHTML = '<span>友だち追加直後</span>';
+  chat.appendChild(dl);
+
+  setTimeout(() => {
+    if (currentSeg !== segKey) return;
+    addBotMessage(seg.msg1, '10:00');
+
+    setTimeout(() => {
+      if (currentSeg !== segKey) return;
+      if (seg.flow === 'directCta') {
+        seg.ctas.forEach(c => addCta(c.label, c.url, c.secondary));
+        chat.scrollTop = chat.scrollHeight;
+      } else {
+        const qr = document.createElement('div');
+        qr.className = 'quick-replies';
+        qr.id = 'qr-panel';
+        seg.options.forEach(b => {
+          const btn = document.createElement('button');
+          btn.className = 'qr-btn';
+          btn.textContent = b.label;
+          btn.onclick = () => handleReply(b.key);
+          qr.appendChild(btn);
+        });
+        chat.appendChild(qr);
+        chat.scrollTop = chat.scrollHeight;
+      }
+    }, 300);
+  }, 400);
+}
+
+function handleReply(key) {
+  if (answered) return;
+  answered = true;
+
+  const reply = DATA[currentSeg].replies[key];
+  const chat = document.getElementById('chat');
+
+  document.querySelectorAll('.qr-btn').forEach(b => b.classList.add('disabled'));
+  addUserMessage(reply.user, '10:00');
+
+  setTimeout(() => {
+    const typing = document.createElement('div');
+    typing.className = 'typing';
+    typing.innerHTML = `
+      <div class="avatar">牛</div>
+      <div class="typing-dots"><span></span><span></span><span></span></div>
+    `;
+    chat.appendChild(typing);
+    chat.scrollTop = chat.scrollHeight;
+
+    setTimeout(() => {
+      typing.remove();
+      showTimeline(reply.timeline);
+    }, 1000);
+  }, 400);
+}
+
+function showTimeline(timeline) {
+  const chat = document.getElementById('chat');
+  timeline.forEach((step) => {
+    const dl = document.createElement('div');
+    dl.className = 'date-label';
+    dl.innerHTML = `<span>${step.date}</span>`;
+    chat.appendChild(dl);
+
+    addBotMessage(step.msg, '10:00');
+
+    if (step.ctas && step.ctas.length) {
+      step.ctas.forEach(c => addCta(c.label, c.url, c.secondary));
+    }
+  });
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function addCta(label, url, secondary) {
+  const chat = document.getElementById('chat');
+  const wrap = document.createElement('div');
+  wrap.className = 'cta-wrap';
+  const a = document.createElement('a');
+  a.className = 'cta-btn' + (secondary ? ' secondary' : '');
+  a.href = url;
+  a.target = '_blank';
+  a.rel = 'noopener';
+  a.textContent = label + ' ▶';
+  wrap.appendChild(a);
+  chat.appendChild(wrap);
+}
+
+function addBotMessage(text, time) {
+  const chat = document.getElementById('chat');
+  const row = document.createElement('div');
+  row.className = 'msg-row bot';
+  row.innerHTML = `
+    <div class="avatar">牛</div>
+    <div class="bubble">${escapeHtml(text)}</div>
+    <span class="time">${time}</span>
+  `;
+  chat.appendChild(row);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function addUserMessage(text, time) {
+  const chat = document.getElementById('chat');
+  const row = document.createElement('div');
+  row.className = 'msg-row user';
+  row.innerHTML = `
+    <span class="time">${time}</span>
+    <div class="bubble">${escapeHtml(text)}</div>
+  `;
+  chat.appendChild(row);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function escapeHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+
+showInitial();
+</script>
+</body>
+</html>
