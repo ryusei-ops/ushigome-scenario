@@ -320,7 +320,7 @@
   <ul>
     <li>上部ボタンで3パターン（サインQR／名刺QR／Webリンク）を切替</li>
     <li>A：初回3択 → 「来院中」のみ受診後フォローへ接続。残り2つは初回返信のみ</li>
-    <li>B：友だち追加直後に10%OFFクーポンを配布 → 初回2択（受診を検討／当院について）→ 経路に合った即時返信1通</li>
+    <li>B：友だち追加直後にご挨拶＋10%OFFクーポン＋締めの一言を配信（選択肢なし）</li>
     <li>C：初回3択 → 経路に合った即時返信1通（ステップ配信なし）</li>
     <li>「リセット」で最初から再生</li>
   </ul>
@@ -328,7 +328,7 @@
   <h3 style="margin-top:14px">経路別タグ設計</h3>
   <ul>
     <li><span class="tag">経路-サイン-来院中</span> <span class="tag">経路-サイン-認知</span> <span class="tag">経路-サイン-検討</span></li>
-    <li><span class="tag">経路-名刺-検討</span> <span class="tag">経路-名刺-認知</span></li>
+    <li><span class="tag">経路-名刺</span> <span class="tag">クーポン-USHIGOME-2606</span></li>
     <li><span class="tag">経路-Web-LP</span> <span class="tag">経路-Web-SNS</span> <span class="tag">経路-Web-EC</span></li>
   </ul>
 
@@ -447,8 +447,13 @@ const B_INITIAL = `〇〇様、こんにちは
 ご縁に感謝を込めまして、
 ささやかですが下記クーポンをお贈りいたします。`;
 
-const B_INITIAL2 = `差し支えなければ、
-今後のご関心をお聞かせください。`;
+const B_INITIAL2 = `是非お会いできますことを、
+心より楽しみにお待ちしております。
+
+ご不明な点がございましたら、
+お気軽にこのLINEへお声かけください。
+
+牛込内科・糖尿病クリニック`;
 
 const B_COUPON = `──────────────────
 【名刺ご縁 特別クーポン】
@@ -592,12 +597,11 @@ const DATA = {
   },
   B: {
     label: 'B：名刺のQRコード',
-    flow: 'quickreply',
+    flow: 'directCta',
     msg1: B_INITIAL,
     coupon: B_COUPON,
     msg2: B_INITIAL2,
-    options: B_OPTIONS,
-    replies: B_REPLIES
+    ctas: []
   },
   C: {
     label: 'C：Webの友だち追加リンク',
