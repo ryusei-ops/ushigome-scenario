@@ -295,7 +295,7 @@
 
 <div class="controls">
   <button class="seg-btn active" data-seg="A" onclick="switchSegment('A')">A：クリニックサインQR</button>
-  <button class="seg-btn" data-seg="B" onclick="switchSegment('B')">B：名刺QR（法人）</button>
+  <button class="seg-btn" data-seg="B" onclick="switchSegment('B')">B：名刺QR</button>
   <button class="seg-btn" data-seg="C" onclick="switchSegment('C')">C：Web友だち追加リンク</button>
   <button class="reset-btn" onclick="resetChat()">リセット</button>
 </div>
@@ -319,16 +319,16 @@
   <h3>操作方法</h3>
   <ul>
     <li>上部ボタンで3パターン（サインQR／名刺QR／Webリンク）を切替</li>
-    <li>A：初回3択 → 「いま来院しています」のみ受診後フォローへ接続。残り2つは初回返信のみ</li>
-    <li>B：法人窓口。直接メッセージ送信を促す案内のみ</li>
-    <li>C：初回4択 → 経路に合った即時返信1通（ステップ配信なし）</li>
+    <li>A：初回3択 → 「来院中」のみ受診後フォローへ接続。残り2つは初回返信のみ</li>
+    <li>B：初回2択（受診を検討／当院について）→ 経路に合った即時返信1通</li>
+    <li>C：初回3択 → 経路に合った即時返信1通（ステップ配信なし）</li>
     <li>「リセット」で最初から再生</li>
   </ul>
 
   <h3 style="margin-top:14px">経路別タグ設計</h3>
   <ul>
     <li><span class="tag">経路-サイン-来院中</span> <span class="tag">経路-サイン-認知</span> <span class="tag">経路-サイン-検討</span></li>
-    <li><span class="tag">経路-名刺-法人</span></li>
+    <li><span class="tag">経路-名刺-検討</span> <span class="tag">経路-名刺-認知</span></li>
     <li><span class="tag">経路-Web-LP</span> <span class="tag">経路-Web-SNS</span> <span class="tag">経路-Web-EC</span></li>
   </ul>
 
@@ -343,7 +343,8 @@
 const RESERVE_URL = '#予約LP';
 const ONLINE_URL = '#オンライン診療';
 const FAQ_URL = '#初診の流れ';
-const B2B_URL = '#法人窓口資料';
+const HP_URL = 'https://ushigome-clinic.com';
+const ABOUT_URL = 'https://ushigome-clinic.com/aboutus';
 
 // ========== 経路A：クリニックサインのQR ==========
 const A_INITIAL = `〇〇様、こんにちは
@@ -403,11 +404,13 @@ LINEではご受診後のご相談や、
  土曜 9:00〜13:00
 
 ■ アクセス
- 新宿区市谷薬王寺町14-17
+ 東京都新宿区市谷薬王寺町14-17
+ アルス市ヶ谷薬王寺 101
 
 ご不明点があればお気軽にメッセージください。`,
         ctas: [
-          { label: '初診のご予約はこちら', url: RESERVE_URL }
+          { label: '初診のご予約はこちら', url: RESERVE_URL },
+          { label: '当院について', url: ABOUT_URL, secondary: true }
         ]
       }
     ]
@@ -433,18 +436,64 @@ LINEではご受診後のご相談や、
   }
 };
 
-// ========== 経路B：名刺QR（法人B2B） ==========
-const B_INITIAL = `ご挨拶の機会をいただき
-ありがとうございました。
+// ========== 経路B：名刺QR ==========
+const B_INITIAL = `〇〇様、こんにちは
+牛込内科・糖尿病クリニックです。
+ご登録ありがとうございます。
 
-牛込内科・糖尿病クリニック
-法人窓口LINEです。
+先日はご挨拶の機会をいただき、
+誠にありがとうございました。
 
-ご用件は下のメッセージ欄から
-そのままご送信ください。
-担当者よりご返信いたします。`;
+差し支えなければ、
+今後のご関心をお聞かせください。`;
 
-const B_DIRECT_CTAS = [];
+const B_OPTIONS = [
+  { key: 'considering', label: '受診を検討' },
+  { key: 'about', label: '当院について' }
+];
+
+const B_REPLIES = {
+  considering: {
+    user: '受診を検討',
+    timeline: [
+      {
+        date: '即時',
+        msg: `ご検討いただきありがとうございます。
+
+ご不安な点やご相談がございましたら、
+このLINEからお気軽にお声かけください。
+
+ご都合のよいタイミングで
+ご予約を承っております。
+
+どうぞお体を大切にお過ごしください。`,
+        ctas: [
+          { label: '初診のご予約はこちら', url: RESERVE_URL }
+        ]
+      }
+    ]
+  },
+  about: {
+    user: '当院について',
+    timeline: [
+      {
+        date: '即時',
+        msg: `ありがとうございます。
+当院のご紹介ページをご用意しております。
+
+診療内容や院内の様子、
+医師の紹介などをご覧いただけます。
+
+ご不明な点がございましたら、
+お気軽にこのLINEまでお声かけください。`,
+        ctas: [
+          { label: '当院について', url: ABOUT_URL },
+          { label: '公式ホームページ', url: HP_URL, secondary: true }
+        ]
+      }
+    ]
+  }
+};
 
 // ========== 経路C：Web友だち追加リンク ==========
 const C_INITIAL = `〇〇様、こんにちは
@@ -527,10 +576,11 @@ const DATA = {
     replies: A_REPLIES
   },
   B: {
-    label: 'B：名刺のQRコード（法人B2B）',
-    flow: 'directCta',
+    label: 'B：名刺のQRコード',
+    flow: 'quickreply',
     msg1: B_INITIAL,
-    ctas: B_DIRECT_CTAS
+    options: B_OPTIONS,
+    replies: B_REPLIES
   },
   C: {
     label: 'C：Webの友だち追加リンク',
