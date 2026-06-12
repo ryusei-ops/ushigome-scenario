@@ -227,6 +227,82 @@
   }
   .cta-btn.secondary:hover { background: #f3fff7; }
 
+  /* Coupon card */
+  .coupon-wrap { margin: 8px 0 8px 44px; animation: fadeIn .35s ease; max-width: 260px; }
+  .coupon-card {
+    background: linear-gradient(135deg, #fff8f0 0%, #fff 100%);
+    border: 1.5px dashed #d97706;
+    border-radius: 14px;
+    padding: 14px 16px;
+    box-shadow: 0 2px 8px rgba(217,119,6,.12);
+    position: relative;
+    overflow: hidden;
+  }
+  .coupon-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, #d97706 0%, #f59e0b 50%, #d97706 100%);
+  }
+  .coupon-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #d97706;
+    letter-spacing: .08em;
+    margin-bottom: 4px;
+  }
+  .coupon-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+  }
+  .coupon-discount {
+    font-size: 26px;
+    font-weight: 800;
+    color: #d97706;
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+  .coupon-discount small { font-size: 13px; font-weight: 600; margin-left: 2px; }
+  .coupon-target {
+    font-size: 11px;
+    color: #666;
+    margin-bottom: 10px;
+  }
+  .coupon-code-box {
+    background: #fff;
+    border: 1px solid #fed7aa;
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .coupon-code-label {
+    font-size: 10px;
+    color: #999;
+    font-weight: 600;
+  }
+  .coupon-code {
+    font-size: 14px;
+    font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: .05em;
+    font-family: 'SF Mono', Menlo, monospace;
+  }
+  .coupon-expire {
+    font-size: 10px;
+    color: #999;
+  }
+  .coupon-note {
+    font-size: 10px;
+    color: #888;
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+
   /* Typing */
   .typing { display: flex; align-items: flex-end; gap: 8px; margin-bottom: 8px; }
   .typing-dots {
@@ -320,7 +396,7 @@
   <ul>
     <li>上部ボタンで3パターン（サインQR／名刺QR／Webリンク）を切替</li>
     <li>A：初回3択 → 「来院中」のみ受診後フォローへ接続。残り2つは初回返信のみ</li>
-    <li>B：初回2択（受診を検討／当院について）→ 経路に合った即時返信1通</li>
+    <li>B：友だち追加直後に10%OFFクーポンを配布 → 初回2択（受診を検討／当院について）→ 経路に合った即時返信1通</li>
     <li>C：初回3択 → 経路に合った即時返信1通（ステップ配信なし）</li>
     <li>「リセット」で最初から再生</li>
   </ul>
@@ -444,8 +520,21 @@ const B_INITIAL = `〇〇様、こんにちは
 先日はご挨拶の機会をいただき、
 誠にありがとうございました。
 
-差し支えなければ、
+ご縁に感謝を込めまして、
+ささやかですが下記クーポンをお贈りいたします。`;
+
+const B_INITIAL2 = `差し支えなければ、
 今後のご関心をお聞かせください。`;
+
+const B_COUPON = {
+  label: '名刺ご縁 特別クーポン',
+  title: '初回ご受診特別優待',
+  discount: '10',
+  target: '自費診療メニュー対象',
+  code: 'USHIGOME10',
+  expire: 'ご登録より3ヶ月以内',
+  note: 'ご来院時にこちらの画面をスタッフへご提示ください。'
+};
 
 const B_OPTIONS = [
   { key: 'considering', label: '受診を検討' },
@@ -579,6 +668,8 @@ const DATA = {
     label: 'B：名刺のQRコード',
     flow: 'quickreply',
     msg1: B_INITIAL,
+    coupon: B_COUPON,
+    msg2: B_INITIAL2,
     options: B_OPTIONS,
     replies: B_REPLIES
   },
@@ -624,7 +715,7 @@ function showInitial() {
     if (currentSeg !== segKey) return;
     addBotMessage(seg.msg1, '10:00');
 
-    setTimeout(() => {
+    const showRest = () => {
       if (currentSeg !== segKey) return;
       if (seg.flow === 'directCta') {
         seg.ctas.forEach(c => addCta(c.label, c.url, c.secondary));
@@ -643,8 +734,48 @@ function showInitial() {
         chat.appendChild(qr);
         chat.scrollTop = chat.scrollHeight;
       }
+    };
+
+    setTimeout(() => {
+      if (currentSeg !== segKey) return;
+      if (seg.coupon) {
+        addCoupon(seg.coupon);
+        setTimeout(() => {
+          if (currentSeg !== segKey) return;
+          if (seg.msg2) {
+            addBotMessage(seg.msg2, '10:00');
+            setTimeout(showRest, 300);
+          } else {
+            showRest();
+          }
+        }, 500);
+      } else {
+        showRest();
+      }
     }, 300);
   }, 400);
+}
+
+function addCoupon(c) {
+  const chat = document.getElementById('chat');
+  const wrap = document.createElement('div');
+  wrap.className = 'coupon-wrap';
+  wrap.innerHTML = `
+    <div class="coupon-card">
+      <div class="coupon-label">${escapeHtml(c.label)}</div>
+      <div class="coupon-title">${escapeHtml(c.title)}</div>
+      <div class="coupon-discount">${escapeHtml(c.discount)}<small>% OFF</small></div>
+      <div class="coupon-target">${escapeHtml(c.target)}</div>
+      <div class="coupon-code-box">
+        <span class="coupon-code-label">CODE</span>
+        <span class="coupon-code">${escapeHtml(c.code)}</span>
+      </div>
+      <div class="coupon-expire">有効期限：${escapeHtml(c.expire)}</div>
+      <div class="coupon-note">${escapeHtml(c.note)}</div>
+    </div>
+  `;
+  chat.appendChild(wrap);
+  chat.scrollTop = chat.scrollHeight;
 }
 
 function handleReply(key) {
