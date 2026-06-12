@@ -319,15 +319,15 @@
   <h3>操作方法</h3>
   <ul>
     <li>上部ボタンで3パターン（サインQR／名刺QR／Webリンク）を切替</li>
-    <li>A：初回3択 → 「来院中」のみ受診後フォローへ接続。残り2つは初回返信のみ</li>
-    <li>B：友だち追加直後にご挨拶＋10%OFFクーポン＋締めの一言を配信（選択肢なし）</li>
+    <li>A：初回2択 → 「来院中」は受診後フォローへ接続、「受診を検討」は予約案内</li>
+    <li>B：友だち追加直後にご挨拶＋10%OFFクーポン＋締めの一言を1メッセージに統合して配信</li>
     <li>C：初回3択 → 経路に合った即時返信1通（ステップ配信なし）</li>
     <li>「リセット」で最初から再生</li>
   </ul>
 
   <h3 style="margin-top:14px">経路別タグ設計</h3>
   <ul>
-    <li><span class="tag">経路-サイン-来院中</span> <span class="tag">経路-サイン-認知</span> <span class="tag">経路-サイン-検討</span></li>
+    <li><span class="tag">経路-サイン-来院中</span> <span class="tag">経路-サイン-検討</span></li>
     <li><span class="tag">経路-名刺</span> <span class="tag">クーポン-USHIGOME-2606</span></li>
     <li><span class="tag">経路-Web-LP</span> <span class="tag">経路-Web-SNS</span> <span class="tag">経路-Web-EC</span></li>
   </ul>
@@ -355,7 +355,6 @@ const A_INITIAL = `〇〇様、こんにちは
 
 const A_OPTIONS = [
   { key: 'visiting', label: '来院中' },
-  { key: 'awareness', label: '看板を見て登録' },
   { key: 'considering', label: '受診を検討' }
 ];
 
@@ -385,32 +384,6 @@ LINEではご受診後のご相談や、
 お体を大切にお過ごしください。`,
         ctas: [
           { label: 'クチコミを書く', url: '#GoogleReview', secondary: true }
-        ]
-      }
-    ]
-  },
-  awareness: {
-    user: '看板を見て登録',
-    timeline: [
-      {
-        date: '即時',
-        msg: `ご登録ありがとうございます。
-牛込内科・糖尿病クリニックです。
-
-当院は内科全般・生活習慣病・糖尿病などのご相談を承っております。
-
-■ 診療時間
- 平日 9:00〜13:00 / 15:00〜18:00
- 土曜 9:00〜13:00
-
-■ アクセス
- 東京都新宿区市谷薬王寺町14-17
- アルス市ヶ谷薬王寺 101
-
-ご不明点があればお気軽にメッセージください。`,
-        ctas: [
-          { label: '初診のご予約はこちら', url: RESERVE_URL },
-          { label: '当院について', url: ABOUT_URL, secondary: true }
         ]
       }
     ]
@@ -445,17 +418,9 @@ const B_INITIAL = `〇〇様、こんにちは
 誠にありがとうございました。
 
 ご縁に感謝を込めまして、
-ささやかですが下記クーポンをお贈りいたします。`;
+ささやかですが下記クーポンをお贈りいたします。
 
-const B_INITIAL2 = `是非お会いできますことを、
-心より楽しみにお待ちしております。
-
-ご不明な点がございましたら、
-お気軽にこのLINEへお声かけください。
-
-牛込内科・糖尿病クリニック`;
-
-const B_COUPON = `──────────────────
+──────────────────
 【名刺ご縁 特別クーポン】
 
 自費診療メニュー　10％OFF
@@ -465,55 +430,15 @@ const B_COUPON = `──────────────────
 
 ※保険診療は対象外となります
 ※ご来院時にこちらの画面をスタッフへご提示ください
-──────────────────`;
+──────────────────
 
-const B_OPTIONS = [
-  { key: 'considering', label: '受診を検討' },
-  { key: 'about', label: '当院について' }
-];
-
-const B_REPLIES = {
-  considering: {
-    user: '受診を検討',
-    timeline: [
-      {
-        date: '即時',
-        msg: `ご検討いただきありがとうございます。
-
-ご不安な点やご相談がございましたら、
-このLINEからお気軽にお声かけください。
-
-ご都合のよいタイミングで
-ご予約を承っております。
-
-どうぞお体を大切にお過ごしください。`,
-        ctas: [
-          { label: '初診のご予約はこちら', url: RESERVE_URL }
-        ]
-      }
-    ]
-  },
-  about: {
-    user: '当院について',
-    timeline: [
-      {
-        date: '即時',
-        msg: `ありがとうございます。
-当院のご紹介ページをご用意しております。
-
-診療内容や院内の様子、
-医師の紹介などをご覧いただけます。
+是非お会いできますことを、
+楽しみにお待ちしております。
 
 ご不明な点がございましたら、
-お気軽にこのLINEまでお声かけください。`,
-        ctas: [
-          { label: '当院について', url: ABOUT_URL },
-          { label: '公式ホームページ', url: HP_URL, secondary: true }
-        ]
-      }
-    ]
-  }
-};
+お気軽にこのLINEへお声かけください。
+
+牛込内科・糖尿病クリニック`;
 
 // ========== 経路C：Web友だち追加リンク ==========
 const C_INITIAL = `〇〇様、こんにちは
@@ -599,8 +524,6 @@ const DATA = {
     label: 'B：名刺のQRコード',
     flow: 'directCta',
     msg1: B_INITIAL,
-    coupon: B_COUPON,
-    msg2: B_INITIAL2,
     ctas: []
   },
   C: {
