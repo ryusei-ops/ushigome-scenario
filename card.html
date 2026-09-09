@@ -285,7 +285,7 @@ table.plain td.who.l { color: var(--dev); }
 
 <header class="page-header">
   <div class="inner">
-    <div class="eyebrow">構成案　第3版</div>
+    <div class="eyebrow">構成案　第4版</div>
     <h1>牛込内科・糖尿病クリニック　LINE診察券 構成案</h1>
     <p class="sub">LINEの中で使える診察券。受付ではQRを読み取るだけ。診察後のアンケートに答えるとクーポン。</p>
     <div class="meta">
@@ -311,7 +311,7 @@ table.plain td.who.l { color: var(--dev); }
   <div class="sec-head"><h2>できること</h2></div>
   <div class="stmt">
     <strong>患者さまはLINEの中で「診察券」を持ち、受付ではQRを読み取るだけ。診察後のアンケートに答えるとクーポンが届きます。</strong>
-    <p>クーポンは次回のご来院から使え、会計でスタッフが確認して使用済みにします。診察券のしくみはLeit Onが貴院専用に開発し、今のLINE配信はそのまま使い続けます。</p>
+    <p>クーポンは次回のご来院から使え、会計で「使用する」を押した画面をスタッフに見せるだけです。診察券のしくみはLeit Onが貴院専用に開発し、今のLINE配信はそのまま使い続けます。</p>
   </div>
   <div class="steps">
     <div class="step">
@@ -343,7 +343,7 @@ table.plain td.who.l { color: var(--dev); }
   <p class="lead">上の段が患者さまの操作。緑の段が今回つくる部分で、患者さまが操作するたびに裏側で記録と発行を行います。</p>
   <figure style="margin-top:14px">
     <div class="scroll">
-    <svg viewBox="0 0 1310 485" role="img" aria-label="友だち追加、診察券の発行、来院時の受付QR読み取り、診察後のアンケート、クーポン受け取り、次回来院の会計での使用までを、患者さま・診察券のしくみ・受付会計・LINE配信の4段で示した流れ図">
+    <svg viewBox="0 0 1310 485" role="img" aria-label="友だち追加、診察券の発行、来院時の受付QR読み取り、診察後のアンケート、クーポン受け取り、次回来院の会計での使用までを、患者さま・診察券のしくみ・受付会計・LINE配信の4段で示した流れ図。配信ツールとの連携はなし">
       <defs>
         <marker id="fl-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
           <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
@@ -409,23 +409,20 @@ table.plain td.who.l { color: var(--dev); }
       <text class="fl-txt" x="1010" y="208" text-anchor="middle">3ヶ月有効</text>
       <rect class="fl-box dev" x="1125" y="167" width="160" height="56" rx="6"/>
       <text class="fl-txt" x="1205" y="190" text-anchor="middle">使用済みを記録</text>
-      <text class="fl-txt" x="1205" y="208" text-anchor="middle">日時・担当も残る</text>
+      <text class="fl-txt" x="1205" y="208" text-anchor="middle">日時も残る</text>
       <line class="fl-arrow" x1="895" y1="195" x2="928" y2="195" marker-end="url(#fl-ah)"/>
 
       <rect class="fl-box" x="540" y="277" width="160" height="56" rx="6"/>
       <text class="fl-txt" x="620" y="300" text-anchor="middle">受付画面で来院を確認</text>
       <text class="fl-txt" x="620" y="318" text-anchor="middle">初回のみ患者番号を入力</text>
       <rect class="fl-box" x="1125" y="277" width="160" height="56" rx="6"/>
-      <text class="fl-txt" x="1205" y="300" text-anchor="middle">スタッフが暗証番号を</text>
-      <text class="fl-txt" x="1205" y="318" text-anchor="middle">入力して確定</text>
+      <text class="fl-txt" x="1205" y="300" text-anchor="middle">使用済みの画面を確認</text>
+      <text class="fl-txt" x="1205" y="318" text-anchor="middle">割引を適用</text>
 
       <rect class="fl-box" x="150" y="387" width="160" height="56" rx="6"/>
       <text class="fl-txt" x="230" y="410" text-anchor="middle">あいさつを配信</text>
       <text class="fl-txt" x="230" y="428" text-anchor="middle">「診察券を発行」ボタン付き</text>
-      <rect class="fl-box" x="735" y="387" width="160" height="56" rx="6"/>
-      <text class="fl-txt" x="815" y="419" text-anchor="middle">「回答済」の印</text>
-      <line class="fl-arrow dash" x1="895" y1="415" x2="1280" y2="415" marker-end="url(#fl-ah)"/>
-      <text class="fl-lbl" x="1088" y="408" text-anchor="middle">回答に合わせたフォロー配信（今のまま）</text>
+      <text class="fl-lbl" x="540" y="419">受診後フォローなどの配信は今のまま（新しいしくみとの連携なし）</text>
 
       <line class="fl-arrow" x1="230" y1="113" x2="230" y2="385" marker-end="url(#fl-ah)"/>
       <text class="fl-lbl" x="238" y="250">友だち追加</text>
@@ -441,14 +438,12 @@ table.plain td.who.l { color: var(--dev); }
       <text class="fl-lbl" x="688" y="124">夜にアンケートを送信</text>
       <line class="fl-arrow" x1="860" y1="113" x2="860" y2="165" marker-end="url(#fl-ah)"/>
       <text class="fl-lbl" x="868" y="145">回答</text>
-      <line class="fl-arrow" x1="860" y1="223" x2="860" y2="385" marker-end="url(#fl-ah)"/>
-      <text class="fl-lbl" x="868" y="300">状況を共有</text>
       <line class="fl-arrow" x1="1010" y1="167" x2="1010" y2="115" marker-end="url(#fl-ah)"/>
       <text class="fl-lbl" x="1018" y="145">クーポンを表示</text>
       <line class="fl-arrow" x1="1205" y1="113" x2="1205" y2="165" marker-end="url(#fl-ah)"/>
-      <text class="fl-lbl" x="1213" y="145">確認画面が開く</text>
-      <line class="fl-arrow" x1="1205" y1="223" x2="1205" y2="275" marker-start="url(#fl-ah)" marker-end="url(#fl-ah)"/>
-      <text class="fl-lbl" x="1213" y="255">暗証番号で確定</text>
+      <text class="fl-lbl" x="1213" y="145">確認のうえ確定</text>
+      <line class="fl-arrow" x1="1205" y1="223" x2="1205" y2="275" marker-end="url(#fl-ah)"/>
+      <text class="fl-lbl" x="1213" y="255">画面が使用済みに</text>
     </svg>
     </div>
     <div class="legend">
@@ -457,8 +452,8 @@ table.plain td.who.l { color: var(--dev); }
       <span><i class="dash"></i>時間が空く、または今の配信シナリオ</span>
     </div>
     <div class="split">
-      <div><b>新しくつくる</b><span>診察券の発行と保管、来院の記録、診察後アンケート、クーポンの発行と使用処理、受付用の画面</span></div>
-      <div><b>今のまま</b><span>あいさつ配信、受診後フォロー、リッチメニュー（「診察券」ボタンを追加）</span></div>
+      <div><b>新しくつくる</b><span>診察券の発行と保管、来院の記録、診察後アンケートの配信と回答、クーポンの発行と使用処理、受付用の画面</span></div>
+      <div><b>今のまま</b><span>あいさつ配信、受診後フォロー、リッチメニュー（「診察券」ボタンを追加）。新しいしくみとの連携はなし</span></div>
     </div>
   </figure>
 </section>
@@ -523,13 +518,13 @@ table.plain td.who.l { color: var(--dev); }
       <ol class="wire-notes">
         <li><span class="co">1</span><p><b>診察当日の夜にLINEで届きます。</b>1画面1問、5問以内。設問案：説明のわかりやすさ／待ち時間／スタッフの対応／興味のある自費メニュー／ご意見。</p></li>
         <li><span class="co">2</span><p><b>設問は受付用の画面から差し替えできます。</b>来院のきっかけなど、初回だけ聞く設問も入れられます。</p></li>
-        <li><span class="co">3</span><p><b>完了と同時にクーポンを発行。</b>回答は今のLINE配信の出し分けにも使えます。</p></li>
+        <li><span class="co">3</span><p><b>完了と同時にクーポンを発行。</b>回答は受付用の画面で集計して見られます。</p></li>
       </ol>
     </div>
 
     <div class="wire">
       <div class="wire-title"><span class="fig">FIG. 4</span><h3>クーポンと使用処理</h3></div>
-      <div class="phone" aria-label="クーポン画面と会計時の使用処理の下書き">
+      <div class="phone" aria-label="クーポン画面と会計時の使用の下書き">
         <div class="ph-status"><span>9:41</span><span>LINE</span></div>
         <div class="ph-bar"><b>クーポン</b><small>1件</small></div>
         <div class="ph-body">
@@ -548,10 +543,10 @@ table.plain td.who.l { color: var(--dev); }
           <span class="ph-btn" style="position:relative"><span class="co abs">2</span>使用する（会計時に押す）</span>
           <div class="ph-sheet">
             <span class="co abs">3</span>
-            <div class="ph-k">スタッフ確認</div>
-            <div class="ph-pin"><span>•</span><span>•</span><span>•</span><span>•</span></div>
+            <div class="ph-k">確認</div>
+            <div class="ph-note" style="color:var(--ink)">会計時にスタッフの前で押してください。押すと使用済みになり、元に戻せません。</div>
             <span class="ph-btn dev">使用済みにする</span>
-            <div class="ph-note">患者さまご自身では確定できません。</div>
+            <span class="ph-btn ghost" style="text-align:center">やめる</span>
           </div>
           <div class="ph-stamp">使用後の表示：<b>使用済み</b><span class="mono">2026.10.03 14:20</span></div>
           <div class="ph-tabs"><span>診察券</span><span class="on">クーポン</span><span>アンケート</span><span>相談</span></div>
@@ -559,8 +554,8 @@ table.plain td.who.l { color: var(--dev); }
       </div>
       <ol class="wire-notes">
         <li><span class="co">1</span><p><b>院内専用・自費診療のみ。</b>保険診療は割引できないため対象外。EC用クーポンとは別に発行します。</p></li>
-        <li><span class="co">2</span><p><b>次回のご来院時、会計で押します。</b>来院の記録がある日だけ押せ、押すとスタッフ確認の画面が開きます。</p></li>
-        <li><span class="co">3</span><p><b>スタッフが暗証番号で確定。</b>誰が・いつ使ったかが自動で残り、手作業の突き合わせは不要です。</p></li>
+        <li><span class="co">2</span><p><b>次回のご来院時、会計で押します。</b>来院の記録がある日だけ押せるので、自宅での押し間違いは起きません。</p></li>
+        <li><span class="co">3</span><p><b>確認のうえ使用済みに。</b>時刻入りの「使用済み」画面をスタッフが見て割引します。誰が・いつ使ったかは自動で残ります。</p></li>
       </ol>
     </div>
   </div>
@@ -568,10 +563,10 @@ table.plain td.who.l { color: var(--dev); }
 
 <section id="arch">
   <div class="sec-head"><span class="fig">FIG. 5</span><h2>全体像</h2></div>
-  <p class="lead">新しくつくるのは真ん中の部分です。受付・会計はパソコンの画面で確認するだけで、読み取り端末は不要です。</p>
+  <p class="lead">新しくつくるのは真ん中の部分です。受付はパソコンの画面で来院を確認するだけで、読み取り端末は不要です。今のLINE配信ツールとはつなぎません。</p>
   <figure class="compact" style="margin-top:14px">
     <div class="scroll">
-    <svg viewBox="0 0 880 270" role="img" aria-label="受付に置くQR、患者さまのLINE、新しくつくる診察券のしくみ、今のLINE配信、受付・会計のパソコンの関係を示した全体像">
+    <svg viewBox="0 0 880 270" role="img" aria-label="受付に置くQR、患者さまのLINE、新しくつくる診察券のしくみ、今のLINE配信、受付・会計のパソコンの関係を示した全体像。配信ツールとの連携はなし">
       <defs>
         <marker id="ar-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
           <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
@@ -599,20 +594,18 @@ table.plain td.who.l { color: var(--dev); }
 
       <rect class="arch-box ext" x="640" y="60" width="200" height="60" rx="8"/>
       <text class="arch-txt" x="740" y="85" text-anchor="middle">今のLINE配信ツール</text>
-      <text class="arch-sub" x="740" y="104" text-anchor="middle">あいさつ・フォロー配信</text>
+      <text class="arch-sub" x="740" y="104" text-anchor="middle">今のまま・連携なし</text>
 
       <rect class="arch-box" x="640" y="170" width="200" height="70" rx="8"/>
       <text class="arch-txt" x="740" y="200" text-anchor="middle">受付・会計のパソコン</text>
-      <text class="arch-sub" x="740" y="220" text-anchor="middle">来院の確認・暗証番号</text>
+      <text class="arch-sub" x="740" y="220" text-anchor="middle">来院の確認・患者番号の入力</text>
 
       <line class="arch-arrow" x1="240" y1="95" x2="318" y2="95" marker-start="url(#ar-ah)" marker-end="url(#ar-ah)"/>
       <text class="arch-lbl" x="279" y="86" text-anchor="middle">診察券・クーポン</text>
 
-      <line class="arch-arrow" x1="560" y1="110" x2="638" y2="110" marker-start="url(#ar-ah)" marker-end="url(#ar-ah)"/>
-      <text class="arch-lbl" x="599" y="128" text-anchor="middle">状況を共有</text>
 
       <line class="arch-arrow" x1="640" y1="205" x2="562" y2="205" marker-end="url(#ar-ah)"/>
-      <text class="arch-lbl" x="600" y="222" text-anchor="middle">確認・確定</text>
+      <text class="arch-lbl" x="600" y="222" text-anchor="middle">来院の確認</text>
 
       <polyline class="arch-arrow" points="640,75 600,75 600,28 140,28 140,58" marker-end="url(#ar-ah)"/>
       <text class="arch-lbl" x="370" y="22" text-anchor="middle">あいさつ・フォロー配信（今のまま）</text>
@@ -645,7 +638,7 @@ table.plain td.who.l { color: var(--dev); }
       <div class="g-label"><span class="num">5</span>患者さま用の画面づくり</div>
       <div class="g-cell"></div><div class="g-cell"></div><div class="g-cell on"></div><div class="g-cell on"></div><div class="g-cell on"></div><div class="g-cell on"></div><div class="g-cell"></div><div class="g-cell"></div>
 
-      <div class="g-label"><span class="num">6</span>今のLINE配信とのつなぎ込み</div>
+      <div class="g-label"><span class="num">6</span>夜のアンケート配信のしくみ</div>
       <div class="g-cell"></div><div class="g-cell"></div><div class="g-cell"></div><div class="g-cell"></div><div class="g-cell on"></div><div class="g-cell on"></div><div class="g-cell"></div><div class="g-cell"></div>
 
       <div class="g-label"><span class="num">7</span>受付用の画面づくり</div>
@@ -677,12 +670,11 @@ table.plain td.who.l { color: var(--dev); }
   <table class="plain">
     <thead><tr><th style="width:34%">項目</th><th>内容</th><th style="width:12%">ご担当</th></tr></thead>
     <tbody>
-      <tr><td>LINE公式アカウントの管理者権限</td><td>初期設定に必要です。手順はご案内します。</td><td class="who c">貴院</td></tr>
-      <tr><td>今のLINE配信ツールのプラン</td><td>状況を自動で渡せるかが変わります。</td><td class="who c">貴院</td></tr>
+      <tr><td>LINE公式アカウントの管理者権限</td><td>着手時に付与をお願いします。手順はご案内します。</td><td class="who c">貴院</td></tr>
+      <tr><td>LINE公式アカウントの配信プラン</td><td>診察後アンケートは来院1回につき1通送ります。無料プランは月200通までなので、超える見込みならライトプラン（月5,000通）へ。</td><td class="who c">貴院</td></tr>
       <tr><td>予約システム・カルテの種類</td><td>第2段階以降で必要です。</td><td class="who c">貴院</td></tr>
       <tr><td>クーポンの対象メニューと期限</td><td>自費のどのメニューを対象にするか。</td><td class="who c">貴院</td></tr>
       <tr><td>個人情報の同意文</td><td>文案は当方で作成します。</td><td class="who l">共同</td></tr>
-      <tr><td>暗証番号を持つ方</td><td>受付・会計のご担当者。</td><td class="who c">貴院</td></tr>
     </tbody>
   </table>
   </div>
@@ -694,7 +686,7 @@ table.plain td.who.l { color: var(--dev); }
 </section>
 
 <div class="foot">
-  <span>牛込内科・糖尿病クリニック　LINE診察券 構成案　第3版</span>
+  <span>牛込内科・糖尿病クリニック　LINE診察券 構成案　第4版</span>
   <span class="mono">2026-09-09 / Leit On</span>
 </div>
 
