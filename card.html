@@ -285,7 +285,7 @@ table.plain td.who.l { color: var(--dev); }
 
 <header class="page-header">
   <div class="inner">
-    <div class="eyebrow">構成案　第6版</div>
+    <div class="eyebrow">構成案　第7版</div>
     <h1>牛込内科・糖尿病クリニック　LINE診察券 構成案</h1>
     <p class="sub">LINEの中で使える診察券。受付ではQRを読み取るだけ。会計を待つ間のアンケートで、次回使えるクーポン。</p>
     <div class="meta">
@@ -467,7 +467,7 @@ table.plain td.who.l { color: var(--dev); }
       <span><i class="dash"></i>時間が空く、または今の配信シナリオ</span>
     </div>
     <div class="split">
-      <div><b>新しくつくる</b><span>診察券の発行と保管、来院の記録と回数のカウント、会計待ちのアンケート、クーポンの発行と使用処理、受付用の画面</span></div>
+      <div><b>新しくつくる</b><span>診察券の発行と保管、来院の記録と回数のカウント、会計待ちのアンケート、アンケート回答や来院回数に応じたクーポンの発行と使用処理、受付用の画面</span></div>
       <div><b>今のまま</b><span>あいさつ配信、受診後フォロー、リッチメニュー（「診察券」ボタンを追加）。新しいしくみとの連携はなし</span></div>
     </div>
     <div class="card" style="margin-top:16px">
@@ -476,6 +476,8 @@ table.plain td.who.l { color: var(--dev); }
         <div><span>来院回数と前回の来院日。診察券と受付画面の両方に表示</span><span>患者ごと</span></div>
         <div><span>来院の間隔と、期間ごとの来院数。受付画面で一覧・集計</span><span>院全体</span></div>
         <div><span>しばらく来院のない方の一覧。フォローの声かけに使えます</span><span>抽出</span></div>
+        <div><span>来院回数に応じたクーポンの自動発行（例：5回目に自費のお試しクーポン）</span><span>自動</span></div>
+        <div><span>来院した瞬間に受付画面の一番上へ表示し、チャイムで知らせる</span><span>受付</span></div>
       </div>
     </div>
   </figure>
@@ -582,7 +584,7 @@ table.plain td.who.l { color: var(--dev); }
         </div>
       </div>
       <ol class="wire-notes">
-        <li><span class="co">1</span><p><b>院内専用・自費診療のみ。</b>保険診療は割引できないため対象外。EC用クーポンとは別に発行します。</p></li>
+        <li><span class="co">1</span><p><b>院内専用・自費診療のみ。</b>アンケート回答のほか、来院回数に応じても発行できます。EC用クーポンとは別に発行します。</p></li>
         <li><span class="co">2</span><p><b>次回のご来院時、会計で押します。</b>発行した当日は押せず、来院の記録がある日だけ押せます。自宅での押し間違いは起きません。</p></li>
         <li><span class="co">3</span><p><b>確認のうえ使用済みに。</b>時刻入りの「使用済み」画面をスタッフが見て割引します。誰が・いつ使ったかは自動で残ります。</p></li>
       </ol>
@@ -627,7 +629,7 @@ table.plain td.who.l { color: var(--dev); }
 
       <rect class="arch-box" x="640" y="170" width="200" height="70" rx="8"/>
       <text class="arch-txt" x="740" y="200" text-anchor="middle">受付・会計のパソコン</text>
-      <text class="arch-sub" x="740" y="220" text-anchor="middle">来院の確認・来院回数・患者番号の入力</text>
+      <text class="arch-sub" x="740" y="220" text-anchor="middle">来院を即時表示・来院回数・患者番号の入力</text>
 
       <line class="arch-arrow" x1="240" y1="95" x2="318" y2="95" marker-start="url(#ar-ah)" marker-end="url(#ar-ah)"/>
       <text class="arch-lbl" x="279" y="86" text-anchor="middle">診察券・クーポン</text>
@@ -685,7 +687,7 @@ table.plain td.who.l { color: var(--dev); }
   <table class="plain">
     <thead><tr><th style="width:14%">段階</th><th>範囲</th><th style="width:26%">始める条件</th></tr></thead>
     <tbody>
-      <tr><td><b>第1段階</b></td><td>診察券・受付のQR・来院回数の記録・会計待ちのアンケート・クーポン・受付用の画面</td><td>ご確認事項の回答後</td></tr>
+      <tr><td><b>第1段階</b></td><td>診察券・受付のQR・来院回数の記録・会計待ちのアンケート・クーポン（回答・来院回数で発行）・受付用の画面</td><td>ご確認事項の回答後</td></tr>
       <tr><td><b>第2段階</b></td><td>予約システムとのつなぎ込み（次回予約の表示）</td><td>予約システムが決まってから</td></tr>
       <tr><td><b>第3段階</b></td><td>受診内容の表示、カルテの患者番号との本格的な結び付け</td><td>カルテ側の確認後</td></tr>
     </tbody>
@@ -712,7 +714,7 @@ table.plain td.who.l { color: var(--dev); }
 </section>
 
 <div class="foot">
-  <span>牛込内科・糖尿病クリニック　LINE診察券 構成案　第6版</span>
+  <span>牛込内科・糖尿病クリニック　LINE診察券 構成案　第7版</span>
   <span class="mono">2026-09-09 / 大石</span>
 </div>
 
