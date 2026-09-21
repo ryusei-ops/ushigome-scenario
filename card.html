@@ -8,15 +8,15 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
 <style>
 :root {
-  --bg: #f3f6fa;
+  --bg: #f9fafb;
   --surface: #ffffff;
-  --ink: #1a2233;
-  --muted: #5b6b80;
-  --line: #d9e0ea;
-  --line-strong: #9aa8ba;
-  --navy: #0f4c81;
-  --navy-deep: #16213e;
-  --navy-tint: #e8f0f8;
+  --ink: #1f2937;
+  --muted: #6b7280;
+  --line: #d1d5db;
+  --line-strong: #9aa3b2;
+  --navy: #0066cc;
+  --navy-deep: #003d7a;
+  --navy-tint: #e6f0ff;
   --dev: #0d9488;
   --dev-tint: #e4f5f2;
   --warn: #b45309;
@@ -74,7 +74,7 @@ body {
 h1, h2, h3 { text-wrap: balance; line-height: 1.35; }
 
 .page-header {
-  background: linear-gradient(135deg, #0f4c81 0%, #16213e 100%);
+  background: linear-gradient(135deg, #0066cc 0%, #003d7a 100%);
   color: #ffffff;
   padding: 44px 20px 36px;
 }
@@ -285,11 +285,12 @@ table.plain td.who.l { color: var(--dev); }
 
 <header class="page-header">
   <div class="inner">
-    <div class="eyebrow">構成案　第7版</div>
+    <div class="eyebrow">構成案　第8版</div>
     <h1>牛込内科・糖尿病クリニック　LINE診察券 構成案</h1>
     <p class="sub">LINEの中で使える診察券。受付ではQRを読み取るだけ。会計を待つ間のアンケートで、次回使えるクーポン。</p>
     <div class="meta">
       <span>作成：2026-09-09</span>
+      <span>更新：2026-09-21</span>
       <span>大石</span>
       <span>株式会社Amluki 様／牛込内科・糖尿病クリニック 様</span>
     </div>
@@ -422,7 +423,7 @@ table.plain td.who.l { color: var(--dev); }
 
       <rect class="fl-box" x="540" y="277" width="160" height="56" rx="6"/>
       <text class="fl-txt" x="620" y="300" text-anchor="middle">受付画面で来院を確認</text>
-      <text class="fl-txt" x="620" y="318" text-anchor="middle">患者番号の登録は任意</text>
+      <text class="fl-txt" x="620" y="318" text-anchor="middle">初回のみ電カル番号を入力</text>
       <rect class="fl-box" x="1125" y="277" width="160" height="56" rx="6"/>
       <text class="fl-txt" x="1205" y="300" text-anchor="middle">受付画面で来院を確認</text>
       <text class="fl-txt" x="1205" y="318" text-anchor="middle">回数・前回来院日も見える</text>
@@ -476,7 +477,8 @@ table.plain td.who.l { color: var(--dev); }
         <div><span>来院回数と前回の来院日。診察券と受付画面の両方に表示</span><span>患者ごと</span></div>
         <div><span>来院の間隔と、期間ごとの来院数。受付画面で一覧・集計</span><span>院全体</span></div>
         <div><span>しばらく来院のない方の一覧。フォローの声かけに使えます</span><span>抽出</span></div>
-        <div><span>来院回数に応じたクーポンの自動発行（例：5回目に自費のお試しクーポン）</span><span>自動</span></div>
+        <div><span>来院回数に応じたクーポンの自動発行（5回目）</span><span>自動</span></div>
+        <div><span>会計時に施術を1タップ登録し、初回割・継続割を自動判定（自費のご来院のみ）</span><span>記録</span></div>
         <div><span>来院した瞬間に受付画面の一番上へ表示し、チャイムで知らせる（スタッフのLINEへの通知も可）</span><span>受付</span></div>
       </div>
     </div>
@@ -702,7 +704,8 @@ table.plain td.who.l { color: var(--dev); }
     <thead><tr><th style="width:34%">項目</th><th>内容</th><th style="width:12%">ご担当</th></tr></thead>
     <tbody>
       <tr><td>LINE公式アカウントの管理者権限</td><td>着手時に付与をお願いします。手順はご案内します。</td><td class="who c">貴院</td></tr>
-      <tr><td>クーポンの対象メニューと期限</td><td>自費のどのメニューを対象にするか。</td><td class="who c">貴院</td></tr>
+      <tr><td>割引の中身</td><td>初回割・継続割・回数割（5回目）それぞれの割引率かお試し価格。対象は自費全メニュー、期限3ヶ月で確定済み。</td><td class="who c">貴院</td></tr>
+      <tr><td>電カルの患者一覧の出力可否</td><td>番号・氏名・生年月日をCSVで出せれば、受付での番号入力を自動照合に置き換えられます。</td><td class="who c">貴院</td></tr>
       <tr><td>個人情報の同意文</td><td>文案は当方で作成します。</td><td class="who l">共同</td></tr>
     </tbody>
   </table>
@@ -714,7 +717,7 @@ table.plain td.who.l { color: var(--dev); }
 </section>
 
 <div class="foot">
-  <span>牛込内科・糖尿病クリニック　LINE診察券 構成案　第7版</span>
+  <span>牛込内科・糖尿病クリニック　LINE診察券 構成案　第8版</span>
   <span class="mono">2026-09-09 / 大石</span>
 </div>
 

@@ -8,15 +8,15 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
 <style>
 :root {
-  --bg: #f3f6fa;
+  --bg: #f9fafb;
   --surface: #ffffff;
-  --ink: #1a2233;
-  --muted: #5b6b80;
-  --line: #d9e0ea;
-  --line-strong: #9aa8ba;
-  --navy: #0f4c81;
-  --navy-deep: #16213e;
-  --navy-tint: #e8f0f8;
+  --ink: #1f2937;
+  --muted: #6b7280;
+  --line: #d1d5db;
+  --line-strong: #9aa3b2;
+  --navy: #0066cc;
+  --navy-deep: #003d7a;
+  --navy-tint: #e6f0ff;
   --dev: #0d9488;
   --dev-tint: #e4f5f2;
   --warn: #b45309;
@@ -74,7 +74,7 @@ body {
 h1, h2, h3 { text-wrap: balance; line-height: 1.35; }
 
 .page-header {
-  background: linear-gradient(135deg, #0f4c81 0%, #16213e 100%);
+  background: linear-gradient(135deg, #0066cc 0%, #003d7a 100%);
   color: #ffffff;
   padding: 44px 20px 36px;
 }
@@ -310,6 +310,7 @@ table.plain td.who.l { color: var(--dev); }
     <p class="sub">LINEの中で使える診察券。受付ではQRを読み取るだけ。会計を待つ間のアンケートで、次回使えるクーポン。</p>
     <div class="meta">
       <span>作成：2026-09-12</span>
+      <span>更新：2026-09-21（ご回答を反映）</span>
       <span>大石</span>
       <span>株式会社Amluki 様／牛込内科・糖尿病クリニック 様</span>
     </div>
@@ -427,7 +428,7 @@ table.plain td.who.l { color: var(--dev); }
 
       <rect class="fl-box" x="540" y="277" width="160" height="56" rx="6"/>
       <text class="fl-txt" x="620" y="300" text-anchor="middle">受付画面で来院を確認</text>
-      <text class="fl-txt" x="620" y="318" text-anchor="middle">患者番号の登録は任意</text>
+      <text class="fl-txt" x="620" y="318" text-anchor="middle">初回のみ電カル番号を入力</text>
       <rect class="fl-box" x="1125" y="277" width="160" height="56" rx="6"/>
       <text class="fl-txt" x="1205" y="300" text-anchor="middle">受付画面で来院を確認</text>
       <text class="fl-txt" x="1205" y="318" text-anchor="middle">回数・前回来院日も見える</text>
@@ -477,7 +478,7 @@ table.plain td.who.l { color: var(--dev); }
 
 <section id="screens">
   <div class="sec-head"><span class="fig">FIG. 2–4</span><h2>画面イメージ</h2></div>
-  <p class="lead">配置を確認するための下書きです。文言・色は貴院のトーンに合わせて仕上げます。</p>
+  <p class="lead">配置を確認するための下書きです。色はHPに合わせ、文言は貴院のトーンに仕上げます。診察券を素早く出せるよう、リッチメニューの一番大きな枠に「診察券」を置き、開いた直後に診察券が表示される形にします。</p>
   <div class="wire-grid" style="margin-top:18px">
     <div class="wire">
       <div class="wire-title"><span class="fig">FIG. 2</span><h3>診察券</h3></div>
@@ -618,29 +619,53 @@ table.plain td.who.l { color: var(--dev); }
     </div>
   </div>
   <p class="note" style="margin-top:12px">Q5で選んだメニューに合わせて、診察券に出すクーポンを変えます。「特になし」の方には共通のクーポンを出します。</p>
+  <div class="kv" style="margin-top:16px">
+    <div class="card">
+      <h3>集計と使いみち</h3>
+      <div class="items">
+        <div><span>Q1 知ったきっかけ → 経路別の新規数。看板・名刺・チケットサイトの効果を見る</span><span>集客</span></div>
+        <div><span>Q2 受診内容 → 保険と自費の構成</span><span>構成</span></div>
+        <div><span>Q3・Q4 → 満足度の月次推移と、気になった点の内訳</span><span>満足度</span></div>
+        <div><span>Q5 興味のあるメニュー → クーポンの出し分けと、需要のあるメニューの把握</span><span>出し分け</span></div>
+        <div><span>Q6 自由記述 → 一覧で確認</span><span>声</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>データの流れ</h3>
+      <div class="items">
+        <div><span>回答は診察券番号に紐づけて保存。電カル番号を入れた方は患者単位で突き合わせできます</span><span>保存</span></div>
+        <div><span>受付画面の「アンケート集計」で期間を指定して閲覧。設問ごとのグラフと自由記述の一覧</span><span>閲覧</span></div>
+        <div><span>Googleスプレッドシートへ毎日自動で書き出し。貴社側での加工・共有に使えます</span><span>出力</span></div>
+        <div><span>設問・選択肢は受付画面から変更。変更前の回答は旧設問のまま集計され、混ざりません</span><span>変更</span></div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <section id="coupon">
   <div class="sec-head"><h2>クーポン</h2></div>
   <div class="kv">
     <div class="card">
-      <h3>決まっていること</h3>
+      <h3>決まったこと</h3>
       <div class="items">
-        <div><span>対象は自費診療のみ。院内専用で、EC用とは別</span><span>対象</span></div>
-        <div><span>アンケート回答で1枚。来院回数に応じても発行（例：5回目）</span><span>発行</span></div>
+        <div><span>対象は自費診療の全メニュー（HPの自費診療ページに掲載のもの）。院内専用で、EC用とは別</span><span>対象</span></div>
+        <div><span>アンケート回答で1枚。来院5回目でも1枚</span><span>発行</span></div>
         <div><span>次回のご来院から使える。発行した当日は使えない</span><span>開始</span></div>
         <div><span>翌日から3ヶ月有効・1回限り</span><span>期限</span></div>
         <div><span>会計で「使用する」を押し、使用済みの画面を見せて割引</span><span>使い方</span></div>
+        <div><span>診察・発送管理アプリのクーポンとは別管理で開始。統合は必要になった時点で（先方システム側の対応が要ります）</span><span>管理</span></div>
       </div>
     </div>
     <div class="card">
-      <h3>決めていただくこと</h3>
+      <h3>割引の種類と、そのために記録すること</h3>
       <div class="items">
-        <div><span>対象にする自費メニュー（1〜2つに絞ると動きやすい）</span><span>メニュー</span></div>
-        <div><span>割引の内容（初回お試し価格か、○%引きか）</span><span>金額</span></div>
-        <div><span>来院回数クーポンを出す回数（例：5回目）</span><span>回数</span></div>
-        <div><span>有効期限を3ヶ月のままでよいか</span><span>期限</span></div>
+        <div><span>初回割：そのメニューが初めての方</span><span>初回</span></div>
+        <div><span>継続割：前回から一定期間内に同じメニューを受けた方</span><span>継続</span></div>
+        <div><span>回数割：来院回数に応じて（5回目）</span><span>回数</span></div>
+        <div><span>初回割・継続割には「誰がどのメニューを受けたか」の記録が必要。会計時に受付画面で施術を1タップ選ぶ運用にします（保険のご来院は不要）</span><span>記録</span></div>
+        <div><span>クーポン使用時は使うメニューを選んでもらうので、自動で記録されます</span><span>自動</span></div>
       </div>
+      <p class="note" style="margin-top:10px">自費診療は完全予約制なので、予約内容を取り込める場合は1タップも不要にできます。割引の中身（○%か、お試し価格か）はメニューごとに受付画面から設定できます。</p>
     </div>
   </div>
 </section>
@@ -650,9 +675,10 @@ table.plain td.who.l { color: var(--dev); }
   <ol class="ops">
     <li><div><b>受付にQRを置く。会計側にもう1枚</b><span>「LINEの診察券をお持ちの方は読み取りをお願いします」の一声。</span></div></li>
     <li><div><b>受付のパソコンで受付画面を開いておく</b><span>来院があると一覧の先頭に出て、チャイムが鳴ります。スタッフのLINEに通知を送る形にもできます（通数によっては公式アカウントのプラン変更が必要）。</span></div></li>
-    <li><div><b>（任意）初めての方の患者番号を受付画面で入力</b><span>カルテと突き合わせたくなった時点で始めれば十分です。入力しなくても来院回数・アンケート・クーポンは動きます。</span></div></li>
+    <li><div><b>初めての方は、受付画面で電カルの患者番号を入力</b><span>本日の来院一覧に氏名と生年月日が出るので、その行に入れるだけ。2回目からは不要です。電カルの番号と診察券番号はこれで結び付きます。</span></div></li>
     <li><div><b>会計待ちの間にアンケートの一声</b><span>「次回使えるクーポンをお渡しします」と添えます。</span></div></li>
     <li><div><b>クーポンを使う方は、使用済みの画面を見て割引</b><span>スタッフの操作はありません。</span></div></li>
+    <li><div><b>自費のご来院は、会計時に受付画面で施術を1タップ登録</b><span>初回割・継続割の判定に使います。保険のご来院は不要です。</span></div></li>
   </ol>
   <p class="note" style="margin-top:12px">お名前・生年月日・電話番号は暗号化して保管し、お名前の一覧は院内の受付画面でのみ表示します。割引の案内は診察券の中に置き、配信の見出しには出しません。</p>
 </section>
@@ -661,7 +687,7 @@ table.plain td.who.l { color: var(--dev); }
   <div class="sec-head"><h2>進め方</h2></div>
   <p class="lead">着手から公開まで、目安8週です。色付きの2つは貴院にご協力いただく工程です。</p>
   <ol class="ops" style="margin-top:14px">
-    <li class="client"><div><b>仕様の確定</b><span>この資料の内容で確定。上の「決めていただくこと」をお知らせください。</span></div><span class="when">1〜2週目</span></li>
+    <li class="client"><div><b>仕様の確定</b><span>この資料の内容で確定。残りはメニューごとの割引の中身だけです。</span></div><span class="when">1〜2週目</span></li>
     <li class="client"><div><b>LINE側の初期設定</b><span>公式アカウントの管理者権限で30分ほど。画面共有で一緒に進めます。</span></div><span class="when">2週目</span></li>
     <li><div><b>開発</b><span>診察券・受付QR・アンケート・クーポン・受付画面。</span></div><span class="when">3〜6週目</span></li>
     <li class="client"><div><b>テストと受付リハーサル</b><span>実際の受付のパソコンと、患者役のスマホで一通り試します。</span></div><span class="when">7〜8週目</span></li>
