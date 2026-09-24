@@ -310,7 +310,7 @@ table.plain td.who.l { color: var(--dev); }
     <p class="sub">LINEの中で使える診察券。受付ではQRを読み取るだけ。会計を待つ間のアンケートで、次回使えるクーポン。</p>
     <div class="meta">
       <span>作成：2026-09-12</span>
-      <span>更新：2026-09-21（ご回答を反映）</span>
+      <span>更新：2026-09-24（日次運用を確定）</span>
       <span>大石</span>
       <span>株式会社Amluki 様／牛込内科・糖尿病クリニック 様</span>
     </div>
@@ -323,6 +323,7 @@ table.plain td.who.l { color: var(--dev); }
   <a class="nav-btn" href="#survey">アンケート項目</a>
   <a class="nav-btn" href="#coupon">クーポン</a>
   <a class="nav-btn" href="#ops">受付でやること</a>
+  <a class="nav-btn" href="flow.html">現場フロー（別紙）</a>
   <a class="nav-btn" href="#schedule">進め方</a>
 </nav>
 
@@ -439,7 +440,7 @@ table.plain td.who.l { color: var(--dev); }
       <rect class="fl-box" x="150" y="387" width="160" height="56" rx="6"/>
       <text class="fl-txt" x="230" y="410" text-anchor="middle">あいさつを配信</text>
       <text class="fl-txt" x="230" y="428" text-anchor="middle">「診察券を発行」ボタン付き</text>
-      <text class="fl-lbl" x="540" y="419">受診後フォローなどの配信は今のまま（新しいしくみとの連携なし）</text>
+      <text class="fl-lbl" x="540" y="419">あいさつと保険のフォロー（急性・慢性）は今のまま。自費の施術後フォローは新しいしくみから送ります</text>
 
       <line class="fl-arrow" x1="230" y1="113" x2="230" y2="385" marker-end="url(#fl-ah)"/>
       <text class="fl-lbl" x="238" y="250">友だち追加</text>
@@ -472,7 +473,32 @@ table.plain td.who.l { color: var(--dev); }
       <span><i></i>今あるもの・人の操作</span>
       <span><i class="dash"></i>時間が空く</span>
     </div>
-    <figcaption>今のLINE配信（あいさつ・受診後フォロー）はそのまま動きます。新しいしくみとはつなぎません。</figcaption>
+    <figcaption>あいさつと保険のフォロー（急性・慢性）は今のLINE配信のまま。自費の施術後フォローは、施術の登録を起点に新しいしくみから送ります。</figcaption>
+  </figure>
+  <figure class="compact" style="margin-top:18px">
+    <div class="scroll">
+    <svg viewBox="0 0 900 150" role="img" aria-label="会計で施術を登録すると、新しいしくみが施術後フォローを予約し、患者さまのLINEに当日か翌朝、3日後、14日後、30日後、60日後に届く流れ">
+      <defs>
+        <marker id="mf-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+        </marker>
+      </defs>
+      <text class="fl-phase" x="40" y="24">自費のご来院のあと（施術後フォロー）</text>
+      <rect class="fl-box" x="40" y="40" width="230" height="70" rx="6"/>
+      <text class="fl-txt" x="155" y="68" text-anchor="middle">会計：施術を登録</text>
+      <text class="fl-lbl" x="155" y="90" text-anchor="middle">受付画面で1〜2タップ（翌朝まとめても可）</text>
+      <rect class="fl-box dev" x="335" y="40" width="230" height="70" rx="6"/>
+      <text class="fl-txt" x="450" y="68" text-anchor="middle">施術後フォローを自動で予約</text>
+      <text class="fl-lbl" x="450" y="90" text-anchor="middle">新しいしくみ・スタッフの操作なし</text>
+      <rect class="fl-box" x="630" y="40" width="230" height="70" rx="6"/>
+      <text class="fl-txt" x="745" y="68" text-anchor="middle">患者さまのLINEに届く</text>
+      <text class="fl-lbl" x="745" y="90" text-anchor="middle">当日か翌朝・3日後・14日後・30日後・60日後</text>
+      <line class="fl-arrow" x1="270" y1="75" x2="333" y2="75" marker-end="url(#mf-ah)"/>
+      <line class="fl-arrow" x1="565" y1="75" x2="628" y2="75" marker-end="url(#mf-ah)"/>
+      <text class="fl-lbl" x="40" y="138">保険のご来院（急性・慢性）のフォローは、これまで通り配信ツール側の運用のままです。</text>
+    </svg>
+    </div>
+    <figcaption>施術の登録がそのままフォロー配信の起動になるので、配信ツールで別途アクションを実行する必要はありません。配信は公式アカウントの通数を使うため、自費のご来院数によってはライトプラン（月5,000通・5,000円）への変更をお願いする場合があります。</figcaption>
   </figure>
 </section>
 
@@ -662,10 +688,10 @@ table.plain td.who.l { color: var(--dev); }
         <div><span>初回割：そのメニューが初めての方</span><span>初回</span></div>
         <div><span>継続割：前回から一定期間内に同じメニューを受けた方</span><span>継続</span></div>
         <div><span>回数割：来院回数に応じて（5回目）</span><span>回数</span></div>
-        <div><span>初回割・継続割には「誰がどのメニューを受けたか」の記録が必要。会計時に受付画面で施術を1タップ選ぶ運用にします（保険のご来院は不要）</span><span>記録</span></div>
+        <div><span>初回割・継続割には「誰がどのメニューを受けたか」の記録が必要。会計時か翌朝に、受付画面で施術を選ぶ運用にします（保険のご来院は不要）。この登録が施術後フォロー配信の起動を兼ねます</span><span>記録</span></div>
         <div><span>クーポン使用時は使うメニューを選んでもらうので、自動で記録されます</span><span>自動</span></div>
       </div>
-      <p class="note" style="margin-top:10px">自費診療は完全予約制なので、予約内容を取り込める場合は1タップも不要にできます。割引の中身（○%か、お試し価格か）はメニューごとに受付画面から設定できます。</p>
+      <p class="note" style="margin-top:10px">予約アプリ・電カルからの取り込みはできないため、施術内容は手入力で確定です。割引の中身（○%か、お試し価格か）はメニューごとに受付画面から設定できます。</p>
     </div>
   </div>
 </section>
@@ -678,8 +704,9 @@ table.plain td.who.l { color: var(--dev); }
     <li><div><b>初めての方は、受付画面で電カルの患者番号を入力</b><span>本日の来院一覧に氏名と生年月日が出るので、その行に入れるだけ。2回目からは不要です。電カルの番号と診察券番号はこれで結び付きます。</span></div></li>
     <li><div><b>会計待ちの間にアンケートの一声</b><span>「次回使えるクーポンをお渡しします」と添えます。</span></div></li>
     <li><div><b>クーポンを使う方は、使用済みの画面を見て割引</b><span>スタッフの操作はありません。</span></div></li>
-    <li><div><b>自費のご来院は、会計時に受付画面で施術を1タップ登録</b><span>初回割・継続割の判定に使います。保険のご来院は不要です。</span></div></li>
+    <li><div><b>自費のご来院は、受付画面で施術を登録（会計時か、翌朝まとめて）</b><span>この登録で施術後フォロー配信が自動で始まり、初回割・継続割の判定にも使います。保険のご来院は不要です。</span></div></li>
   </ol>
+  <p class="lead" style="margin-top:14px">毎日の入力は「電カル番号（初回のみ）」と「施術内容（自費のみ）」の2つだけです。フォロー配信のシナリオを別に起動する作業はありません。場面ごとの手順は <a href="flow.html">現場フロー（受付・会計・翌朝）</a> にまとめています。</p>
   <p class="note" style="margin-top:12px">お名前・生年月日・電話番号は暗号化して保管し、お名前の一覧は院内の受付画面でのみ表示します。割引の案内は診察券の中に置き、配信の見出しには出しません。</p>
 </section>
 
@@ -689,7 +716,7 @@ table.plain td.who.l { color: var(--dev); }
   <ol class="ops" style="margin-top:14px">
     <li class="client"><div><b>仕様の確定</b><span>この資料の内容で確定。残りはメニューごとの割引の中身だけです。</span></div><span class="when">1〜2週目</span></li>
     <li class="client"><div><b>LINE側の初期設定</b><span>公式アカウントの管理者権限で30分ほど。画面共有で一緒に進めます。</span></div><span class="when">2週目</span></li>
-    <li><div><b>開発</b><span>診察券・受付QR・アンケート・クーポン・受付画面。</span></div><span class="when">3〜6週目</span></li>
+    <li><div><b>開発</b><span>診察券・受付QR・アンケート・クーポン・受付画面・施術後フォロー配信。</span></div><span class="when">3〜6週目</span></li>
     <li class="client"><div><b>テストと受付リハーサル</b><span>実際の受付のパソコンと、患者役のスマホで一通り試します。</span></div><span class="when">7〜8週目</span></li>
     <li><div><b>公開</b><span>受付にQRを掲示、リッチメニューに「診察券」を追加、手順書をお渡し。</span></div><span class="when">8週目</span></li>
   </ol>
